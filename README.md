@@ -13,7 +13,7 @@ This will install required Python packages in user's space.
 
 ## Writing tests
 Please consult with Behave's tutorial for fast and easy [introduction](https://pythonhosted.org/behave/tutorial.html).
-See [features/000_empty_check.feature](features/000_empty_check.feature) for example test and
+See [features/000_basic_tests.feature](features/000_basic_tests.feature) for example test and
 [steps/steps.py](steps/steps.py) for steps implementation.
 
 ### Tagging tests
