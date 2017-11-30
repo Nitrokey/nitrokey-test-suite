@@ -1,56 +1,11 @@
 import pexpect
 from behave import *
 
-from nose.tools import *
-from binascii import hexlify
-
-import binascii
-
-from pexpect import spawn
-
-
 class Object(object):
     pass
 
 
 glcon = Object()
-
-
-#
-# def text_to_bin(v):
-#     vr = v
-#     try:
-#         import binascii
-#         vr = vr.replace('\\x', '')
-#         vr = vr.replace('"', '')
-#         vr = binascii.unhexlify(vr)
-#     except:
-#         vr = v
-#         my_logger.debug('not binasci')
-#
-#     try:
-#         vr = vr.encode()
-#     except:
-#         my_logger.debug('not encoded in text_to_bin')
-#         pass
-#
-#     return vr
-
-# @given('cmd_verify with {who_str} and "{pass_str}"')
-# def cmd_verify(context,who_str,pass_str):
-#     if not getattr(glcon, 'oldpass', None):
-#         glcon.oldpass = {}
-#
-#     who = int(who_str)
-#     pass_str = pass_str[:32].encode()  # OpenPGP v2.1 uses 32 bytes for storage, v3.3 32 UTF8 chars (here made for v3.3/utf-8)
-#     oldpass_get = glcon.oldpass.get(who_str, 'not-set')
-#     my_logger.debug('Last set password: "{}" , trying: "{}", same: "{}"'.format(oldpass_get, pass_str.decode(), oldpass_get == pass_str.decode()))
-#     context.result = context.token.cmd_verify(who, pass_str)
-
-
-# class logfile(Object):
-#     def write(self):
-#         return sys.stderr.write(w)
 
 @given("Run '{command}'")
 def run_cmd(context, command: str):
