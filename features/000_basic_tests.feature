@@ -20,6 +20,7 @@ Feature: Generate RSA key
      And 'admin' results in '.*Admin commands are allowed.*'
      And send 'generate'
      And on 'Make off-card backup of encryption key?.*' say 'N'
+     And (optional) on 'Replace existing keys' say 'y'
      And (optional) on 'Please enter the PIN' say '123456'
      And (optional) on 'Please enter the Admin PIN' say '12345678'
      And on '.*Signature key.*' say '2048'
@@ -31,8 +32,8 @@ Feature: Generate RSA key
      And on 'Email address' say 'asd@asd.com'
      And on 'Comment' say 'aaaa'
      And on 'Change' say 'O'
-     And (optional) on 'Please enter the Admin PIN.*Admin PIN:' say '12345678'
-     And fail if will see 'gpg: key generation failed: Card error' in 300 seconds
+     # And (optional) on 'Please enter the Admin PIN.*Admin PIN:' say '12345678'
+     And fail if will see 'gpg: key generation failed: Card error' in 60 seconds
      And wait for 'PROMPT'
      And send 'exit'
     Then finish with success
