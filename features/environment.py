@@ -1,3 +1,4 @@
+import signal
 
 
 def before_all(context):
@@ -5,5 +6,5 @@ def before_all(context):
 
 def after_scenario(context, scenario):
     if getattr(context, 'child', None) is not None:
-        context.child.kill()
+        context.child.kill(signal.SIGINT)
         context.child.wait()
