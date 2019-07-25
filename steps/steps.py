@@ -13,6 +13,7 @@ def run_cmd(context, command: str):
     context.child = pexpect.spawn(command)
     context.child.logfile = open('log.txt', 'ba')
     context.vars = {}  # TODO check should vars be cleared on each run
+    context.optional = {}  # TODO check should optional be cleared on each run
 
 
 @given("set '{var}' to '{content}'")
@@ -53,6 +54,10 @@ def impl(context, action, result):
     context.child.sendline(action)
     context.child.expect(result)
 
+def wait_for(context, s, timeout):
+    print(f'Waiting for "{s}" for {timeout} seconds')
+    return context.child.expect(s, timeout)
+
 
 @when("({optional}) on '{result}' say '{action}'")
 @when("on '{result}' say '{action}'")
@@ -60,15 +65,30 @@ def impl(context, action, result, optional=None):
     # TODO same for action?
     if result in context.vars:
         result = context.vars[result]
+
     if optional:
+        context.optional[result] = action
+        return
+
+    for i in range(10):
+        # check for the all registered optionals
+        for rr, aa in context.optional.items():
+            try:
+                wait_for(context, rr, timeout=0.5)
+                context.child.sendline(aa)
+                # remove after one-time use
+                del context.optional[result]  # FIXME allow recurrent checks
+            except:
+                pass
         try:
-            context.child.expect(result, timeout=3)
+            wait_for(context, result, timeout=1)
             context.child.sendline(action)
+            return
         except:
             pass
-    else:
-        context.child.expect(result)
-        context.child.sendline(action)
+
+    context.child.expect(result, timeout=2)
+    context.child.sendline(action)
 
 
 @when("send '{action}'")
