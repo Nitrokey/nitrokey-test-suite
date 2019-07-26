@@ -54,6 +54,7 @@ def impl(context, action, result):
     context.child.sendline(action)
     context.child.expect(result)
 
+
 def wait_for(context, s, timeout):
     print(f'Waiting for "{s}" for {timeout} seconds')
     return context.child.expect(s, timeout)
