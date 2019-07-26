@@ -12,6 +12,18 @@ Feature: Generate RSA key
     Then finish with success
 
 
+  Scenario: Factory reset should be possible
+     Given Run 'gpg --card-edit'
+     And set 'PROMPT' to 'gpg/card> '
+     When wait for 'PROMPT'
+     And 'admin' -> '.*Admin commands are allowed.*'
+     And 'factory-reset' -> '.*Continue?.*'
+     And 'y' -> '.*Really.*'
+     And 'yes' -> 'PROMPT'
+     And ' ' -> 'PROMPT'
+     And send 'exit'
+    Then finish with success
+
 
   Scenario: Generate RSA key 2k
      Given Run 'gpg --card-edit'
@@ -41,14 +53,3 @@ Feature: Generate RSA key
     Then finish with success
 
 
-    Scenario: Factory reset should be possible
-     Given Run 'gpg --card-edit'
-     And set 'PROMPT' to 'gpg/card> '
-     When wait for 'PROMPT'
-     And 'admin' -> '.*Admin commands are allowed.*'
-#     And 'factory-reset' -> '.*Continue?.*'
-#     And 'y' -> '.*Really.*'
-#     And 'yes' -> 'PROMPT'
-     And ' ' -> 'PROMPT'
-     And send 'exit'
-    Then finish with success
