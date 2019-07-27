@@ -4,8 +4,8 @@ Feature: Generate RSA key
   Scenario: Smartcard should be visible by GnuPG
      Given Run 'gpg --card-edit'
      And set 'PROMPT' to 'gpg/card> '
-     When wait for 'PROMPT'
-     And fail if will see 'No such device' in 2 seconds
+     When fail if will see '.*No such device' in 2 seconds
+     And wait for 'PROMPT'
      And 'admin' -> '.*Admin commands are allowed.*'
 #    TODO check listed information
      And ' ' -> 'PROMPT'
@@ -16,8 +16,8 @@ Feature: Generate RSA key
   Scenario: Factory reset should be possible
      Given Run 'gpg --card-edit'
      And set 'PROMPT' to 'gpg/card> '
-     When wait for 'PROMPT'
-     And fail if will see 'No such device' in 2 seconds
+     When fail if will see '.*No such device' in 2 seconds
+     And wait for 'PROMPT'
      And 'admin' -> '.*Admin commands are allowed.*'
      And 'factory-reset' -> '.*Continue?.*'
      And 'y' -> '.*Really.*'
@@ -30,11 +30,11 @@ Feature: Generate RSA key
   Scenario: Generate RSA key 2k
      Given Run 'gpg --card-edit'
      And set 'PROMPT' to 'gpg/card> '
-     When wait for 'PROMPT'
-     And fail if will see 'No such device' in 2 seconds
+     When fail if will see '.*No such device' in 2 seconds
+     And wait for 'PROMPT'
      And 'admin' results in '.*Admin commands are allowed.*'
      And send 'generate'
-     And fail if will see 'No such device' in 2 seconds
+     And fail if will see '.*No such device' in 2 seconds
      And on 'Make off-card backup of encryption key?.*' say 'N'
      And (optional) on 'Replace existing keys' say 'y'
      And (optional) on 'Please enter the PIN' say '123456'
