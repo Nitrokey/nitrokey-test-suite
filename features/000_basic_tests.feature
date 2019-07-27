@@ -5,6 +5,7 @@ Feature: Generate RSA key
      Given Run 'gpg --card-edit'
      And set 'PROMPT' to 'gpg/card> '
      When wait for 'PROMPT'
+     And fail if will see 'No such device' in 2 seconds
      And 'admin' -> '.*Admin commands are allowed.*'
 #    TODO check listed information
      And ' ' -> 'PROMPT'
@@ -16,6 +17,7 @@ Feature: Generate RSA key
      Given Run 'gpg --card-edit'
      And set 'PROMPT' to 'gpg/card> '
      When wait for 'PROMPT'
+     And fail if will see 'No such device' in 2 seconds
      And 'admin' -> '.*Admin commands are allowed.*'
      And 'factory-reset' -> '.*Continue?.*'
      And 'y' -> '.*Really.*'
@@ -29,8 +31,10 @@ Feature: Generate RSA key
      Given Run 'gpg --card-edit'
      And set 'PROMPT' to 'gpg/card> '
      When wait for 'PROMPT'
+     And fail if will see 'No such device' in 2 seconds
      And 'admin' results in '.*Admin commands are allowed.*'
      And send 'generate'
+     And fail if will see 'No such device' in 2 seconds
      And on 'Make off-card backup of encryption key?.*' say 'N'
      And (optional) on 'Replace existing keys' say 'y'
      And (optional) on 'Please enter the PIN' say '123456'
