@@ -1,3 +1,5 @@
+import time
+
 import pexpect
 from behave import *
 
@@ -72,21 +74,24 @@ def impl(context, action, result, optional=None):
         return
 
     for i in range(10):
+        try:
+            wait_for(context, result, timeout=1)
+            context.child.sendline(action)
+            time.sleep(1)
+            return
+        except:
+            pass
+
         # check for the all registered optionals
         for rr, aa in context.optional.items():
             try:
-                wait_for(context, rr, timeout=0.5)
+                wait_for(context, rr, timeout=0.2)
                 context.child.sendline(aa)
+                time.sleep(1)
                 # remove after one-time use
                 del context.optional[result]  # FIXME allow recurrent checks
             except:
                 pass
-        try:
-            wait_for(context, result, timeout=1)
-            context.child.sendline(action)
-            return
-        except:
-            pass
 
     context.child.expect(result, timeout=2)
     context.child.sendline(action)
