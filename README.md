@@ -22,6 +22,7 @@ To tag a test precede the scenario with @name_of_the_tag. More details in Behave
 ## Running
 Usually one only needs:
 ```
+export LANG=C
 behave
 ```
 This will run all feature tests from current directory.
